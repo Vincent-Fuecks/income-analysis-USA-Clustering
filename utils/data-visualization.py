@@ -109,8 +109,8 @@ class data_visualization():
         co = [colors[x] for x in y.astype(int)]
         plt.contourf(xx, yy, Z, alpha=0.5)
         plt.scatter(features[:, 0], features[:, 1], c= co, alpha = 0.1)
-        red_patch = mpatches.Patch(color='indigo', label="Income <= 50K")
-        blue_patch = mpatches.Patch(color='orange', label="Income > 50K")
+        red_patch = mpatches.Patch(color='orange', label="Income <= 50K")
+        blue_patch = mpatches.Patch(color='indigo', label="Income > 50K")
         plt.legend(handles=[red_patch, blue_patch])
         plt.xlabel("Feature-1")
         plt.ylabel("Feature-2")
