@@ -81,7 +81,7 @@ class ModelAlteration():
         df, 
         target:int, 
         algorithm = ["full", "elkan"],
-        n_init = [2,5,10,20,50,100],
+        max_iter = [1,2,5,7,10,20,50,100,200, 300, 500, 1000],
         folds:int = 10,
         plot:bool=True):
         '''
@@ -98,8 +98,8 @@ class ModelAlteration():
                      The index of your target column.
         algorithm   :[String]
                      A list which contains names of algorithm, wihch kMeans intern going to use.
-        n_init      :[int] 
-                     Number of time the k-means algorithm will be run with different centroid seeds.
+        max_iter    :[int] 
+                     Maximum number of iterations of the k-means algorithm for a single run.
         folds       :int 
                      How often your dataframe should be split in strat_kfold_evaluation.
         plot        :bool
@@ -111,18 +111,18 @@ class ModelAlteration():
                     and a dict with the model parameters of the best fold 
         '''
        
-        best_acc, best_model, fold_acc = 0, 0, [[None for _ in n_init] for _ in algorithm]
-        epoch, end = 1, len(n_init)*len(algorithm)
+        best_acc, best_model, fold_acc = 0, 0, [[None for _ in max_iter] for _ in algorithm]
+        epoch, end = 1, len(max_iter)*len(algorithm)
         for i,algo in enumerate(algorithm):
-            for j, init in enumerate(n_init):
-                model = KMeans(n_clusters = 2, n_init = init, algorithm = algo)
+            for j, iter in enumerate(max_iter):
+                model = KMeans(n_clusters = 2, max_iter = iter, algorithm = algo)
                 fold_acc[i][j], tmp_fold = (lambda x: [max(x[0]), x[1]])(self.strat_kfold_evaluation(df, model, target, folds))
                 if fold_acc[i][j] > best_acc: 
                     best_acc = fold_acc[i][j]
-                    best_model = (tmp_fold, {"n_clusters" : 2, "n_init" : init, "algorithm" : algo})
-                print("Epoch %s/%s | eps=%s, algorithm=%s, Accuracy=%s" % (epoch, end, init, algo, fold_acc[i][j]))
+                    best_model = (tmp_fold, {"n_clusters" : 2, "max_iter" : iter, "algorithm" : algo})
+                print("Epoch %s/%s | max_iter =%s, algorithm=%s, Accuracy=%s" % (epoch, end, iter, algo, fold_acc[i][j]))
                 epoch += 1
-        if plot: self.plot_accuracy(fold_acc, "Number of n_init", list(map(lambda x: "algorithm " + x, list(algorithm))), n_init)
+        if plot: self.plot_accuracy(fold_acc, "Number of max_iter", list(map(lambda x: "algorithm " + x, list(algorithm))), max_iter)
         return(best_model)
 
 
