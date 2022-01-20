@@ -53,6 +53,7 @@ class evaluation_measures():
         ------------
         c_result  : Is a tupel, which contains the separated data of each cluster
         '''    
+        all_j = ([None]*len(c_result))
         entropy = 0
         for i, C in enumerate(c_result):
             m = np.sum(C, axis = 0)
