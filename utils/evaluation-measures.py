@@ -6,7 +6,7 @@ from sklearn_extra.cluster import KMedoids
 
 
 class evaluation_measures():
-    def clustering_results(self, df, best_model, model):
+    def clustering_results(self, df, model):
         '''
         This function clusters the data with given model and returns 
         the data of each cluster in an array.
