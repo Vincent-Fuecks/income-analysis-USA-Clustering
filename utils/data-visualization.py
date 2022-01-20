@@ -28,7 +28,7 @@ class data_visualization():
         '''
         arr = np.array(df.iloc[best_model[0]])
         features = self.dimension_reduction_to_n_dimension(arr[:, :-1], n_comp)
-        return features, y = arr[:, -1]
+        return features, arr[:, -1]
 
 
 
