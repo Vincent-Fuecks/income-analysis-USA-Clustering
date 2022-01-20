@@ -39,7 +39,6 @@ class evaluation_measures():
         c_result  : Is a tupel, which contains cluster_0, cluster_0, total 
         '''    
         cluster_0, cluster_1, total = c_result
-        print(cluster_0)
         return (np.sum(cluster_0) + np.sum(cluster_1))/ total
 
 
