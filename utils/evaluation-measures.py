@@ -28,31 +28,25 @@ class evaluation_measures():
     def cluster_purity(self, c_result):
         '''
         This function calculates for each cluster the purity.
-
         Parameters
         ------------
         c_result  : Is a tupel, which contains the separated data of each cluster
-        Returns
-        ------------
-        c_result  : [float] is the purity of each cluster
         '''    
         all_purity = ([None]*len(c_result))
         for i, C in enumerate(c_result):
             tmp = np.sum(C, axis = 0)
             all_purity[i] =  (1/np.sum(tmp)) * np.max(tmp)
-        return all_purity
+            print("Purity for Cluster %d is %f" %(i, all_purity[i]))
+        print("Purity is %f \n" %( np.sum(all_purity)))
+
 
 
     def cluster_entropy(self, c_result):
         '''
         This function calculates for each cluster the entropy.
-
         Parameters
         ------------
         c_result  : Is a tupel, which contains the separated data of each cluster
-        Returns
-        ------------
-        c_result  : [float] is the entropy of each cluster
         '''    
         all_e = np.array([None]*len(c_result))
         for i, C in enumerate(c_result):
@@ -62,4 +56,5 @@ class evaluation_measures():
                 log = 0 if m_j == 0 or np.sum(m) == 0 else np.log(m_j / np.sum(m))   
                 e_j += m_j/np.sum(m) * log
             all_e[i] = e_j*-1
-        return all_e
+            print("Entropy for Cluster %d is %f" %(i, all_e[i]))
+        print("Purity is %f \n" %(np.sum(all_e)))
