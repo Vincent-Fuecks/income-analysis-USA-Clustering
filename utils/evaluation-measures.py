@@ -21,9 +21,8 @@ class evaluation_measures():
         ------------
         c_result  : Return in a tupel the data of each cluster in an array.
         '''        
-        data = np.array(df.iloc[best_model[0]])
-        features = data[:, :-1]
-        target = data[:, -1]
+        features = np.array(df.iloc[:, :-1])
+        target = np.array(df.iloc[:, -1])
         y_pred = model.fit(features).predict(features)
         total = target.shape[0]
         cluster_0 = np.sum([y_t == y and y ==1  for y_t, y in zip(target, y_pred)])
